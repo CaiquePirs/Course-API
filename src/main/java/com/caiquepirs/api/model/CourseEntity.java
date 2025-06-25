@@ -14,13 +14,13 @@ import java.util.UUID;
 public class CourseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String category;
 
     @Enumerated(EnumType.STRING)
