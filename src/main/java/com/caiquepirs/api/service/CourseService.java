@@ -56,6 +56,12 @@ public class CourseService {
         return repository.findAll(spec, pageable);
     }
 
+    public void delete(UUID id){
+       var course = getById(id);
+       repository.delete(course);
+    }
+
+
 
 
 }
