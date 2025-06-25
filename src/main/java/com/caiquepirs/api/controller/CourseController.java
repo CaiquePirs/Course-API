@@ -53,6 +53,12 @@ public class CourseController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<CourseResponseDTO> update(@PathVariable UUID id, @RequestBody(required = false) CourseRequestDTO dto){
+       var course = service.update(id, dto);
+       return ResponseEntity.ok(mapper.toDTO(course));
+    }
+
 
 
 

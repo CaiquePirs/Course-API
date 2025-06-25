@@ -61,6 +61,25 @@ public class CourseService {
        repository.delete(course);
     }
 
+    public CourseEntity update(UUID id, CourseRequestDTO dto) {
+        var existCourse = getById(id);
+
+        if(dto.name() != null && !dto.name().isBlank()){
+            existCourse.setName(dto.name());
+        }
+
+        if(dto.category() != null && !dto.category().isBlank()){
+            existCourse.setCategory(dto.category());
+        }
+
+        repository.findByName(existCourse.getName()).ifPresent(course -> {
+            if (!course.getId().equals(id)) {
+                throw new DuplicateCourseException("There is already a course with this name");
+            }
+        });
+
+        return repository.save(existCourse);
+    }
 
 
 
