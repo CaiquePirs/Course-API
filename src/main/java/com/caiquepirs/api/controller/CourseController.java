@@ -59,11 +59,10 @@ public class CourseController {
        return ResponseEntity.ok(mapper.toDTO(course));
     }
 
-
-
-
-
-
-
+    @PatchMapping("{id}/active")
+    public ResponseEntity<CourseResponseDTO> updateStatus(@PathVariable UUID id){
+       var course = service.toggleStatus(id);
+       return ResponseEntity.ok(mapper.toDTO(course));
+    }
 
 }

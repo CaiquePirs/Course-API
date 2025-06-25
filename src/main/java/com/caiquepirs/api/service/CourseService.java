@@ -81,6 +81,18 @@ public class CourseService {
         return repository.save(existCourse);
     }
 
+    public CourseEntity toggleStatus(UUID id){
+        var course = getById(id);
+
+        if(course.getStatus() == StatusCourse.ACTIVE){
+            course.setStatus(StatusCourse.INACTIVE);
+        }else {
+            course.setStatus(StatusCourse.ACTIVE);
+        }
+
+        return repository.save(course);
+    }
+
 
 
 }
