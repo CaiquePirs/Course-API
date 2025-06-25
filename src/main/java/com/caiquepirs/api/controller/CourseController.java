@@ -8,10 +8,9 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/courses")
@@ -25,6 +24,12 @@ public class CourseController {
     public ResponseEntity<CourseResponseDTO> create(@RequestBody @Valid CourseRequestDTO dto){
         var course = service.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(course));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<CourseResponseDTO> getById(@PathVariable UUID id){
+        var course = service.getById(id);
+        return ResponseEntity.ok(mapper.toDTO(course));
     }
 
 
