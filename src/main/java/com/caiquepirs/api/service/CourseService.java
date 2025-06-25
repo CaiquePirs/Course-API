@@ -5,6 +5,7 @@ import com.caiquepirs.api.exception.CourseNotFoundException;
 import com.caiquepirs.api.exception.DuplicateCourseException;
 import com.caiquepirs.api.mappers.CourseMapper;
 import com.caiquepirs.api.model.CourseEntity;
+import com.caiquepirs.api.model.StatusCourse;
 import com.caiquepirs.api.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,13 +25,12 @@ public class CourseService {
     private final CourseRepository repository;
 
     public CourseEntity create(CourseRequestDTO dto){
-        var existCourseByName = repository.findByName(dto.name()).isPresent();
-
-        if(existCourseByName){
+        repository.findByName(dto.name()).ifPresent(name -> {
             throw new DuplicateCourseException("There is already a course with this name");
-        }
-
-        return repository.save(mapper.toEntity(dto));
+        });
+        var course = mapper.toEntity(dto);
+        course.setStatus(StatusCourse.ACTIVE);
+        return repository.save(course);
     }
 
     public CourseEntity getById(UUID id){

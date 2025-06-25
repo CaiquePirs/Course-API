@@ -3,6 +3,7 @@ package com.caiquepirs.api.controller;
 import com.caiquepirs.api.DTOs.CourseRequestDTO;
 import com.caiquepirs.api.DTOs.CourseResponseDTO;
 import com.caiquepirs.api.mappers.CourseMapper;
+import com.caiquepirs.api.model.CourseEntity;
 import com.caiquepirs.api.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
