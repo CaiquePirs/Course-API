@@ -2,7 +2,7 @@
 
 ## About the Challenge
 
-In this challenge, you will develop a fictional API for a programming course company. At first, you must implement basic CRUD operations to manage courses.
+In this challenge, you will develop a fictional API for a programming course company. At first, you must implement basic CRUD operations to manage courses
 
 The API should include the following features:
 - Create a new course
