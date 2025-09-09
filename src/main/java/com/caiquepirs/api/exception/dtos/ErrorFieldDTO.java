@@ -1,4 +1,4 @@
-package com.caiquepirs.api.exception.DTO;
+package com.caiquepirs.api.exception.dtos;
 
 public record ErrorFieldDTO(String field, String error) {
 }

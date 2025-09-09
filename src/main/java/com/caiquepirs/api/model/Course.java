@@ -10,8 +10,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "courses")
-public class CourseEntity {
+@Table(name = "tb_courses")
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,5 +32,5 @@ public class CourseEntity {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    public CourseEntity(){}
+    public Course(){}
 }

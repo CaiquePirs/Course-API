@@ -1,4 +1,4 @@
-package com.caiquepirs.api.DTOs;
+package com.caiquepirs.api.dtos;
 
 import com.caiquepirs.api.model.StatusCourse;
 

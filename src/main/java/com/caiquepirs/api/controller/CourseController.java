@@ -1,9 +1,9 @@
 package com.caiquepirs.api.controller;
 
-import com.caiquepirs.api.DTOs.CourseRequestDTO;
-import com.caiquepirs.api.DTOs.CourseResponseDTO;
+import com.caiquepirs.api.dtos.CourseRequestDTO;
+import com.caiquepirs.api.dtos.CourseResponseDTO;
 import com.caiquepirs.api.mappers.CourseMapper;
-import com.caiquepirs.api.model.CourseEntity;
+import com.caiquepirs.api.model.Course;
 import com.caiquepirs.api.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -28,13 +28,13 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<CourseResponseDTO> create(@RequestBody @Valid CourseRequestDTO dto){
-        var course = service.create(dto);
+        Course course = service.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(course));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CourseResponseDTO> getById(@PathVariable UUID id){
-        var course = service.getById(id);
+        Course course = service.findById(id);
         return ResponseEntity.ok(mapper.toDTO(course));
     }
 
@@ -45,27 +45,27 @@ public class CourseController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
 
-        Page<CourseEntity> pageResult = service.findByQuery(name, category, page, size);
+        Page<Course> pageResult = service.findByQuery(name, category, page, size);
         Page<CourseResponseDTO> result = pageResult.map(mapper::toDTO);
 
         return ResponseEntity.ok(result);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CourseResponseDTO> update(@PathVariable UUID id, @RequestBody(required = false) CourseRequestDTO dto){
-       var course = service.update(id, dto);
+       Course course = service.update(id, dto);
        return ResponseEntity.ok(mapper.toDTO(course));
     }
 
-    @PatchMapping("{id}/active")
+    @PatchMapping("/{id}/active")
     public ResponseEntity<CourseResponseDTO> updateStatus(@PathVariable UUID id){
-       var course = service.toggleStatus(id);
+       Course course = service.toggleStatus(id);
        return ResponseEntity.ok(mapper.toDTO(course));
     }
 

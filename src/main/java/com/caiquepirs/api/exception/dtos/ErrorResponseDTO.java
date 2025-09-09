@@ -1,6 +1,4 @@
-package com.caiquepirs.api.exception.DTO;
-
-import org.springframework.http.ResponseEntity;
+package com.caiquepirs.api.exception.dtos;
 
 import java.util.List;
 

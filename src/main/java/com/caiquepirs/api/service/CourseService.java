@@ -1,10 +1,10 @@
 package com.caiquepirs.api.service;
 
-import com.caiquepirs.api.DTOs.CourseRequestDTO;
+import com.caiquepirs.api.dtos.CourseRequestDTO;
 import com.caiquepirs.api.exception.CourseNotFoundException;
 import com.caiquepirs.api.exception.DuplicateCourseException;
 import com.caiquepirs.api.mappers.CourseMapper;
-import com.caiquepirs.api.model.CourseEntity;
+import com.caiquepirs.api.model.Course;
 import com.caiquepirs.api.model.StatusCourse;
 import com.caiquepirs.api.repository.CourseRepository;
 import lombok.AllArgsConstructor;
@@ -24,24 +24,24 @@ public class CourseService {
     private final CourseMapper mapper;
     private final CourseRepository repository;
 
-    public CourseEntity create(CourseRequestDTO dto){
+    public Course create(CourseRequestDTO dto){
         repository.findByName(dto.name()).ifPresent(name -> {
             throw new DuplicateCourseException("There is already a course with this name");
         });
-        var course = mapper.toEntity(dto);
+        Course course = mapper.toEntity(dto);
         course.setStatus(StatusCourse.ACTIVE);
         return repository.save(course);
     }
 
-    public CourseEntity getById(UUID id){
+    public Course findById(UUID id){
         return repository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course ID not found"));
     }
 
-    public Page<CourseEntity> findByQuery(String name, String category, int page, int size) {
+    public Page<Course> findByQuery(String name, String category, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("name", "category").ascending());
 
-        Specification<CourseEntity> spec = (root, query, cb) -> cb.conjunction();
+        Specification<Course> spec = (root, query, cb) -> cb.conjunction();
 
         if (name != null && !name.isBlank()) {
             spec = spec.and((root, query, cb) ->
@@ -52,44 +52,34 @@ public class CourseService {
             spec = spec.and((root, query, cb) ->
                     cb.equal(cb.lower(root.get("category")), category.toLowerCase()));
         }
-
         return repository.findAll(spec, pageable);
     }
 
     public void delete(UUID id){
-       var course = getById(id);
+       Course course = findById(id);
        repository.delete(course);
     }
 
-    public CourseEntity update(UUID id, CourseRequestDTO dto) {
-        var existCourse = getById(id);
+    public Course update(UUID id, CourseRequestDTO dto) {
+        Course course = findById(id);
 
-        if(dto.name() != null && !dto.name().isBlank()){
-            existCourse.setName(dto.name());
+        if(dto.name() != null && !dto.name().isBlank()) {
+            repository.findByName(dto.name()).ifPresent(exist -> {
+                if (!course.getId().equals(id)) {
+                    throw new DuplicateCourseException("There is already a course with this name");
+                }
+            });
+            course.setName(dto.name());
         }
-
-        if(dto.category() != null && !dto.category().isBlank()){
-            existCourse.setCategory(dto.category());
-        }
-
-        repository.findByName(existCourse.getName()).ifPresent(course -> {
-            if (!course.getId().equals(id)) {
-                throw new DuplicateCourseException("There is already a course with this name");
-            }
-        });
-
-        return repository.save(existCourse);
+        if(dto.category() != null && !dto.category().isBlank()) course.setCategory(dto.category());
+        return repository.save(course);
     }
 
-    public CourseEntity toggleStatus(UUID id){
-        var course = getById(id);
+    public Course toggleStatus(UUID id){
+        Course course = findById(id);
 
-        if(course.getStatus() == StatusCourse.ACTIVE){
-            course.setStatus(StatusCourse.INACTIVE);
-        }else {
-            course.setStatus(StatusCourse.ACTIVE);
-        }
-
+        if (course.getStatus() == StatusCourse.ACTIVE) course.setStatus(StatusCourse.INACTIVE);
+        else course.setStatus(StatusCourse.ACTIVE);
         return repository.save(course);
     }
 

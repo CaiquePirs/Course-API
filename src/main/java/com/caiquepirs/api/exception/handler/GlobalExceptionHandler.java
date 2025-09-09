@@ -1,8 +1,8 @@
 package com.caiquepirs.api.exception.handler;
 
 import com.caiquepirs.api.exception.CourseNotFoundException;
-import com.caiquepirs.api.exception.DTO.ErrorFieldDTO;
-import com.caiquepirs.api.exception.DTO.ErrorResponseDTO;
+import com.caiquepirs.api.exception.dtos.ErrorFieldDTO;
+import com.caiquepirs.api.exception.dtos.ErrorResponseDTO;
 import com.caiquepirs.api.exception.DuplicateCourseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
