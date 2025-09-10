@@ -1,50 +1,76 @@
-# Challenge API  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="60" height="60" alt="Java"/>
+# Desafio de API - Rocktseat <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="60" height="60" alt="Java"/>
 
-## About the Challenge
+## 📘 Sobre o Desafio
 
-In this challenge, you will develop a fictional API for a programming course company. At first, you must implement basic CRUD operations to manage courses
+Neste desafio, você irá desenvolver uma API fictícia para uma empresa de cursos de programação. O objetivo principal é implementar operações básicas de CRUD para gerenciar cursos.
 
-The API should include the following features:
-- Create a new course
-- List all courses
-- Update a course by its `id`
-- Delete a course by its `id`
+### ✅ Funcionalidades da API
 
-### Routes and Business Rules
+- Criar um novo curso
+- Listar todos os cursos
+- Atualizar um curso pelo seu `id`
+- Excluir um curso pelo seu `id`
 
-Before diving into the routes, let’s understand the structure (properties) a course should have:
+---
 
-- `id` - Unique identifier for each course
-- `name` - Course name
-- `category` - Course category
-- `active` - Indicates whether the course is active or not
-- `created_at` - Date the course was created
-- `updated_at` - Must always be updated with the date the course is modified
+## 📐 Estrutura e Regras de Negócio
 
-Routes:
+Antes de explorar as rotas, é importante entender quais propriedades um curso deve possuir:
 
-- `POST - /courses`
+- `id` – Identificador único do curso
+- `name` – Nome do curso
+- `category` – Categoria do curso
+- `active` – Indica se o curso está ativo ou não
+- `created_at` – Data de criação do curso
+- `updated_at` – Deve ser atualizada sempre que o curso for modificado
 
-  It should be possible to create a course in the database by sending the `name` and `category` fields in the request body.
+---
 
-  When creating a course, the fields `id`, `created_at`, and `updated_at` should be automatically filled according to the property guidelines above.
+## 🚀 Rotas da API
 
-- `GET - /courses`
+### `POST - /courses`
 
-  It should be possible to list all courses saved in the database.
+Cria um novo curso no banco de dados.  
+Campos obrigatórios no corpo da requisição: `name` e `category`.  
+Os campos `id`, `created_at` e `updated_at` devem ser preenchidos automaticamente.
 
-  It should also be possible to search courses by `name` and `category`.
+---
 
-- `PUT - /courses/:id`
+### `GET - /courses`
 
-  It should be possible to update a course by its `id`.
+Lista todos os cursos cadastrados no banco de dados.  
+Também deve permitir a busca por `name` e `category`.
 
-  In the request body, only `name` and/or `category` should be sent for updates.
+---
 
-  If only `name` is sent, `category` must not be updated, and vice versa. Also, if `active` is included in this route, it should be ignored. The route responsible for updating the active status is the PATCH route.
+### `PUT - /courses/:id`
 
-  It should be possible to delete a course by its `id`.
+Atualiza um curso existente pelo seu `id`.  
+No corpo da requisição, apenas os campos `name` e/ou `category` devem ser enviados.  
+Se apenas `name` for enviado, `category` não deve ser alterado, e vice-versa.  
+O campo `active` deve ser ignorado nesta rota — sua atualização é feita via `PATCH`.
 
-- `PATCH - /courses/:id/active`
+---
 
-  This route should be used to toggle the course's active status, i.e., a switch between true or false.
+### `PATCH - /courses/:id/active`
+
+Alterna o status de ativo do curso (`true` ou `false`).  
+Essa rota é responsável exclusivamente por modificar o campo `active`.
+
+---
+
+## 🛠️ Tecnologias sugeridas
+
+- Java 21
+- Spring Boot
+- JPA / Hibernate
+- PostgreSQL ou MySQL
+- Postman para testes
+- Git e GitHub para versionamento
+
+---
+
+## 📫 Contato
+
+[![Gmail](https://img.shields.io/badge/Email-Gmail-red?style=flat&logo=gmail)](mailto:pirescaiq@gmail.com)  
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/caique-pires-8843aa332)
